@@ -1006,6 +1006,17 @@
       animation: heroIn 0.7s ease-out 1.9s both;
     }
 
+    /* ── Animated wave canvas ─────────────────────────── */
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 0;
+      pointer-events: none;
+    }
+
     /* ── Mobile adjustments ───────────────────────────── */
     @media (max-width: 767px) {
       .hv-card { display: none; }
@@ -1057,6 +1068,9 @@
      HERO
 ══════════════════════════════════════════════════ -->
 <section id="home" class="hero">
+
+  <!-- Wave canvas — painted first so dot-grid and orbs render on top -->
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
 
   <!-- Background layers -->
   <div class="hero-dot-grid"></div>
@@ -1750,6 +1764,97 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
 
   revealEls.forEach(el => io.observe(el));
+
+  // ── Hero canvas wave animation ─────────────────────
+  (function() {
+    var canvas = document.getElementById('hero-canvas');
+    var hero   = document.getElementById('home');
+    if (!canvas || !hero) return;
+    var ctx = canvas.getContext('2d');
+
+    var waves = [
+      { offset: 0,             amplitude: 70, frequency: 0.003,  color: 'rgba(200,150,12,0.4)',   opacity: 0.42 },
+      { offset: Math.PI / 2,   amplitude: 90, frequency: 0.0026, color: 'rgba(100,155,220,0.3)',  opacity: 0.28 },
+      { offset: Math.PI,       amplitude: 60, frequency: 0.0034, color: 'rgba(255,255,255,0.07)', opacity: 0.20 },
+      { offset: Math.PI * 1.5, amplitude: 80, frequency: 0.0022, color: 'rgba(200,150,12,0.18)',  opacity: 0.22 },
+      { offset: Math.PI * 2,   amplitude: 55, frequency: 0.004,  color: 'rgba(150,200,255,0.12)', opacity: 0.16 },
+    ];
+
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var mouseInfluence  = prefersReducedMotion ? 8   : 65;
+    var influenceRadius = prefersReducedMotion ? 150 : 300;
+    var smoothing       = prefersReducedMotion ? 0.04 : 0.1;
+
+    var time = 0;
+    var mouseX, mouseY, targetX, targetY;
+
+    function resize() {
+      canvas.width  = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+      mouseX = targetX = canvas.width  / 2;
+      mouseY = targetY = canvas.height / 2;
+    }
+
+    function drawWave(wave) {
+      ctx.save();
+      ctx.beginPath();
+      for (var x = 0; x <= canvas.width; x += 4) {
+        var dx = x - mouseX;
+        var dy = canvas.height / 2 - mouseY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        var influence = Math.max(0, 1 - dist / influenceRadius);
+        var mouseEffect = influence * mouseInfluence *
+          Math.sin(time * 0.001 + x * 0.01 + wave.offset);
+        var y = canvas.height / 2
+          + Math.sin(x * wave.frequency + time * 0.002 + wave.offset) * wave.amplitude
+          + Math.sin(x * wave.frequency * 0.4 + time * 0.003) * (wave.amplitude * 0.45)
+          + mouseEffect;
+        if (x === 0) { ctx.moveTo(x, y); } else { ctx.lineTo(x, y); }
+      }
+      ctx.lineWidth   = 2.5;
+      ctx.strokeStyle = wave.color;
+      ctx.globalAlpha = wave.opacity;
+      ctx.shadowBlur  = 36;
+      ctx.shadowColor = wave.color;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function animate() {
+      time++;
+      mouseX += (targetX - mouseX) * smoothing;
+      mouseY += (targetY - mouseY) * smoothing;
+
+      var grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      grad.addColorStop(0, '#1B3A5C');
+      grad.addColorStop(1, '#0f2236');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.globalAlpha = 1;
+      ctx.shadowBlur  = 0;
+      waves.forEach(drawWave);
+
+      requestAnimationFrame(animate);
+    }
+
+    function onMouseMove(e) {
+      var rect = hero.getBoundingClientRect();
+      targetX = e.clientX - rect.left;
+      targetY = e.clientY - rect.top;
+    }
+
+    function onMouseLeave() {
+      targetX = canvas.width  / 2;
+      targetY = canvas.height / 2;
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    hero.addEventListener('mousemove', onMouseMove);
+    hero.addEventListener('mouseleave', onMouseLeave);
+    requestAnimationFrame(animate);
+  })();
 
   // ── Stat counter animation ─────────────────────────
   function runCounter(el) {
