@@ -1023,6 +1023,134 @@
       .hero-visual { padding: 0.5rem; }
       .hero-visual svg { max-width: 260px; }
     }
+
+    /* ═══════════════════════════════════════════════════
+       DARK SECTION OVERRIDES
+    ═══════════════════════════════════════════════════ */
+
+    /* ── Services ─────────────────────────────────────── */
+    .services { background: var(--color-primary); }
+    .services .section-h2 { color: white; }
+    .services .service-card {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.09);
+    }
+    .services .service-card:hover {
+      background: rgba(255,255,255,0.09);
+      border-left-color: var(--color-accent);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+    }
+    .services .service-icon { background: rgba(255,255,255,0.07); }
+    .services .service-icon svg { color: var(--color-accent); }
+    .services .service-name { color: white; }
+    .services .service-desc { color: rgba(255,255,255,0.60); }
+
+    /* ── About ────────────────────────────────────────── */
+    .about { background: var(--color-primary); }
+    .about .about-h2 { color: white; }
+    .about .about-para { color: rgba(255,255,255,0.63); }
+    .about .icai-badge {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.78);
+    }
+    .about .icai-badge svg { stroke: var(--color-accent); }
+
+    .about .metric-card {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.09);
+      box-shadow: none;
+    }
+    .about .metric-lbl { color: rgba(255,255,255,0.65); }
+
+    /* ── Contact ──────────────────────────────────────── */
+    .contact { background: var(--color-primary); }
+    .contact .section-h2 { color: white; }
+    .contact .form-label { color: rgba(255,255,255,0.78); }
+    .contact .form-input {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.14);
+      color: white;
+    }
+    .contact .form-input::placeholder { color: rgba(255,255,255,0.28); }
+    .contact .form-input:focus {
+      background: rgba(255,255,255,0.10);
+      box-shadow: 0 0 0 3px rgba(200,150,12,0.18);
+    }
+    .contact .form-input option { background: #1B3A5C; }
+    .contact .contact-info-panel {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .contact .contact-panel-h { color: white; }
+    .contact .info-item { border-bottom-color: rgba(255,255,255,0.08); }
+    .contact .info-icon { background: rgba(255,255,255,0.07); }
+    .contact .info-icon svg { color: rgba(255,255,255,0.55); }
+    .contact .info-label { color: rgba(255,255,255,0.78); }
+    .contact .info-val,
+    .contact .info-val a { color: rgba(255,255,255,0.52); }
+    .contact .info-val a:hover { color: var(--color-accent); }
+    .contact .map-placeholder {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.38);
+    }
+    .contact .map-placeholder svg { color: rgba(255,255,255,0.38); }
+    .contact .success-h { color: white; }
+    .contact .success-p { color: rgba(255,255,255,0.60); }
+    .contact .success-icon-wrap { background: rgba(200,150,12,0.15); }
+
+    /* ── Testimonials carousel ────────────────────────── */
+    .testimonials-carousel {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .tc-viewport { overflow: hidden; width: 100%; }
+    .tc-track {
+      display: flex;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+    .tc-track .testimonial-card {
+      flex: 0 0 100%;
+      box-sizing: border-box;
+    }
+    .tc-arrow {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.07);
+      color: white;
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .tc-arrow:hover { background: rgba(200,150,12,0.22); border-color: var(--color-accent); }
+    .tc-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+    .tc-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.25);
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .tc-dot.active { background: var(--color-accent); transform: scale(1.35); }
+    @media (max-width: 767px) {
+      .tc-arrow { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -1475,35 +1603,58 @@
       <h2 class="section-h2" style="color:white;">What Our Clients Say</h2>
     </div>
 
-    <div class="testimonials-grid reveal">
+    <div class="testimonials-carousel" role="region" aria-label="Client testimonials">
+      <button class="tc-arrow tc-prev" aria-label="Previous testimonial">&#8249;</button>
+      <div class="tc-viewport">
+        <div class="tc-track" id="tcTrack">
 
-      <div class="testimonial-card">
-        <span class="quote-mark">&ldquo;</span>
-        <p class="testimonial-text">Rajesh sir has been filing my family's ITRs for 11 years. Never missed a deadline, never a wrong number. Complete trust.</p>
-        <div class="testimonial-author">
-          <p class="testimonial-name">Sunil M.</p>
-          <p class="testimonial-role">Business Owner, Mumbai</p>
+          <div class="testimonial-card">
+            <span class="quote-mark">&ldquo;</span>
+            <p class="testimonial-text">Rajesh sir has been filing my family's ITRs for 11 years. Never missed a deadline, never a wrong number. Complete trust.</p>
+            <div class="testimonial-author">
+              <p class="testimonial-name">Sunil M.</p>
+              <p class="testimonial-role">Business Owner, Mumbai</p>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <span class="quote-mark">&ldquo;</span>
+            <p class="testimonial-text">We were a mess before Kapoor &amp; Co. — missing GST dates, getting notices. In six months they sorted everything. Highly recommend.</p>
+            <div class="testimonial-author">
+              <p class="testimonial-name">Deepa R.</p>
+              <p class="testimonial-role">Director, Retail Chain</p>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <span class="quote-mark">&ldquo;</span>
+            <p class="testimonial-text">Switched from another CA after getting a notice we shouldn't have. Kapoor &amp; Co. resolved it and we've never had an issue since.</p>
+            <div class="testimonial-author">
+              <p class="testimonial-name">Amit T.</p>
+              <p class="testimonial-role">Salaried Professional</p>
+            </div>
+          </div>
+
+          <!-- PLACEHOLDER: Replace with actual client testimonial -->
+          <div class="testimonial-card">
+            <span class="quote-mark">&ldquo;</span>
+            <p class="testimonial-text">As a first-time startup founder I had no idea about GST or TDS. The team sat with me for two hours, explained everything clearly, and set up our entire compliance from scratch. Brilliant.</p>
+            <div class="testimonial-author">
+              <p class="testimonial-name">Ritesh K.</p>
+              <p class="testimonial-role">Co-founder, SaaS Startup</p>
+            </div>
+          </div>
+
         </div>
       </div>
+      <button class="tc-arrow tc-next" aria-label="Next testimonial">&#8250;</button>
+    </div>
 
-      <div class="testimonial-card">
-        <span class="quote-mark">&ldquo;</span>
-        <p class="testimonial-text">We were a mess before Kapoor &amp; Co. — missing GST dates, getting notices. In six months they sorted everything. Highly recommend.</p>
-        <div class="testimonial-author">
-          <p class="testimonial-name">Deepa R.</p>
-          <p class="testimonial-role">Director, Retail Chain</p>
-        </div>
-      </div>
-
-      <div class="testimonial-card">
-        <span class="quote-mark">&ldquo;</span>
-        <p class="testimonial-text">Switched from another CA after getting a notice we shouldn't have. Kapoor &amp; Co. resolved it and we've never had an issue since.</p>
-        <div class="testimonial-author">
-          <p class="testimonial-name">Amit T.</p>
-          <p class="testimonial-role">Salaried Professional</p>
-        </div>
-      </div>
-
+    <div class="tc-dots" id="tcDots">
+      <button class="tc-dot active" data-slide="0" aria-label="Slide 1"></button>
+      <button class="tc-dot" data-slide="1" aria-label="Slide 2"></button>
+      <button class="tc-dot" data-slide="2" aria-label="Slide 3"></button>
+      <button class="tc-dot" data-slide="3" aria-label="Slide 4"></button>
     </div>
   </div>
 </section>
@@ -1517,7 +1668,7 @@
     <div class="reveal" style="margin-bottom:3rem;">
       <span class="section-label">Contact Us</span>
       <h2 class="section-h2">Get in Touch</h2>
-      <p style="color:var(--color-text-muted);margin-top:0.5rem;font-size:1rem;">
+      <p style="color:rgba(255,255,255,0.60);margin-top:0.5rem;font-size:1rem;">
         Book a free 30-minute consultation. No commitment.
       </p>
     </div>
@@ -1877,6 +2028,49 @@
   setTimeout(() => {
     document.querySelectorAll('[data-counter]').forEach(runCounter);
   }, 900);
+
+  // ── Testimonials auto-scroll carousel ─────────────
+  (function() {
+    var track   = document.getElementById('tcTrack');
+    var dotBtns = document.querySelectorAll('#tcDots .tc-dot');
+    if (!track) return;
+
+    var total   = track.children.length;
+    var current = 0;
+    var timer;
+    var INTERVAL = 4200;
+
+    function goTo(n) {
+      current = ((n % total) + total) % total;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dotBtns.forEach(function(d, i) {
+        d.classList.toggle('active', i === current);
+      });
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    function startAuto() { timer = setInterval(next, INTERVAL); }
+    function stopAuto()  { clearInterval(timer); }
+
+    var prevBtn = document.querySelector('.tc-prev');
+    var nextBtn = document.querySelector('.tc-next');
+    if (prevBtn) prevBtn.addEventListener('click', function() { stopAuto(); prev(); startAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { stopAuto(); next(); startAuto(); });
+
+    dotBtns.forEach(function(dot, i) {
+      dot.addEventListener('click', function() { stopAuto(); goTo(i); startAuto(); });
+    });
+
+    var carousel = document.querySelector('.testimonials-carousel');
+    if (carousel) {
+      carousel.addEventListener('mouseenter', stopAuto);
+      carousel.addEventListener('mouseleave', startAuto);
+    }
+
+    startAuto();
+  })();
 
   // ── Smooth scroll for all hash links ──────────────
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
