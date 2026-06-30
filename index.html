@@ -149,16 +149,44 @@
     .navbar.scrolled .nav-link:hover { color: var(--color-primary); }
 
     .btn-nav {
-      background: var(--color-accent);
-      color: var(--color-primary);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9px;
+      padding: 1.5px;
+      background: linear-gradient(to bottom, #917100, #EAD98F);
+      text-decoration: none;
+      transition: transform 250ms cubic-bezier(0.1,0.4,0.2,1), box-shadow 250ms cubic-bezier(0.1,0.4,0.2,1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      will-change: transform;
+      vertical-align: middle;
+    }
+    .btn-nav::before {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      border-radius: 8px;
+      background: linear-gradient(to bottom, #FFFDDD 0%, #856807 50%, #FFF1B3 100%);
+      pointer-events: none;
+    }
+    .btn-nav span {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      border-radius: 7px;
+      background: linear-gradient(to bottom, #FFEBA1, #9B873F);
+      color: #FFFDE5;
+      text-shadow: 0 -1px 0 rgba(178,140,2,1);
       font-weight: 700;
       font-size: 0.83rem;
-      padding: 0.55rem 1.2rem;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
+      font-family: var(--font-body);
+      padding: 0.5rem 1.15rem;
+      white-space: nowrap;
     }
-    .btn-nav:hover { background: #b07e0a; transform: translateY(-1px); }
+    .btn-nav:hover { transform: translateY(-1px); box-shadow: 0 5px 15px rgba(145,113,0,0.4); }
+    .btn-nav:active { transform: translateY(2px) scale(0.99); box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
 
     /* Hamburger */
     .hamburger {
@@ -204,15 +232,14 @@
       padding: 1rem 1.5rem;
     }
     .mobile-menu-cta a {
-      display: block;
+      display: flex;
+      width: 100%;
+    }
+    .mobile-menu-cta a span {
+      width: 100%;
       text-align: center;
-      background: var(--color-accent);
-      color: var(--color-primary);
-      font-weight: 700;
-      font-size: 0.9rem;
       padding: 0.7rem 1rem;
-      border-radius: 6px;
-      text-decoration: none;
+      font-size: 0.9rem;
     }
 
     /* ── HERO ──────────────────────────────────────────────────── */
@@ -277,34 +304,88 @@
       margin-bottom: 3rem;
     }
     .btn-hero-primary {
-      background: var(--color-accent);
-      color: var(--color-primary);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9px;
+      padding: 1.5px;
+      background: linear-gradient(to bottom, #917100, #EAD98F);
+      text-decoration: none;
+      transition: transform 250ms cubic-bezier(0.1,0.4,0.2,1), box-shadow 250ms cubic-bezier(0.1,0.4,0.2,1);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      will-change: transform;
+    }
+    .btn-hero-primary::before {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      border-radius: 8px;
+      background: linear-gradient(to bottom, #FFFDDD 0%, #856807 50%, #FFF1B3 100%);
+      pointer-events: none;
+    }
+    .btn-hero-primary span {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 7px;
+      background: linear-gradient(to bottom, #FFEBA1, #9B873F);
+      color: #FFFDE5;
+      text-shadow: 0 -1px 0 rgba(178,140,2,1);
       font-weight: 700;
       font-size: 0.97rem;
+      font-family: var(--font-body);
       padding: 0.82rem 1.8rem;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: all 0.22s;
-      display: inline-block;
+      white-space: nowrap;
     }
-    .btn-hero-primary:hover {
-      background: #b07e0a;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(200,150,12,0.3);
-    }
+    .btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(145,113,0,0.4); }
+    .btn-hero-primary:active { transform: translateY(2px) scale(0.99); box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+
     .btn-hero-secondary {
-      border: 2px solid var(--color-accent);
-      color: var(--color-accent);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.82rem 1.8rem;
+      border-radius: 100px;
+      text-decoration: none;
+      color: white;
       font-weight: 600;
       font-size: 0.97rem;
-      padding: 0.82rem 1.8rem;
-      border-radius: 8px;
-      text-decoration: none;
       background: transparent;
-      transition: background 0.2s;
-      display: inline-block;
+      transition: transform 300ms ease;
+      white-space: nowrap;
     }
-    .btn-hero-secondary:hover { background: rgba(200,150,12,0.1); }
+    .btn-hero-secondary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 100px;
+      backdrop-filter: url('#btn-glass-filter');
+      -webkit-backdrop-filter: url('#btn-glass-filter');
+      pointer-events: none;
+    }
+    .btn-hero-secondary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 100px;
+      box-shadow:
+        0 0 6px rgba(0,0,0,0.03),
+        0 2px 6px rgba(0,0,0,0.08),
+        inset 3px 3px 0.5px -3px rgba(255,255,255,0.09),
+        inset -3px -3px 0.5px -3px rgba(255,255,255,0.85),
+        inset 1px 1px 1px -0.5px rgba(255,255,255,0.6),
+        inset -1px -1px 1px -0.5px rgba(255,255,255,0.6),
+        inset 0 0 6px 6px rgba(255,255,255,0.12),
+        inset 0 0 2px 2px rgba(255,255,255,0.06),
+        0 0 12px rgba(0,0,0,0.15);
+      pointer-events: none;
+    }
+    .btn-hero-secondary span { position: relative; z-index: 1; }
+    .btn-hero-secondary:hover { transform: scale(1.05); }
 
     .hero-stats {
       display: flex;
@@ -712,19 +793,47 @@
     .form-input.error { border-color: #e74c3c; }
     textarea.form-input { resize: vertical; min-height: 110px; }
     .btn-submit {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
-      background: var(--color-accent);
-      color: var(--color-primary);
-      font-family: var(--font-body);
-      font-weight: 700;
-      font-size: 1rem;
-      padding: 0.88rem 1.5rem;
-      border-radius: 8px;
+      border-radius: 9px;
+      padding: 1.5px;
+      background: linear-gradient(to bottom, #917100, #EAD98F);
       border: none;
       cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
+      font-family: var(--font-body);
+      transition: transform 250ms cubic-bezier(0.1,0.4,0.2,1), box-shadow 250ms cubic-bezier(0.1,0.4,0.2,1);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      will-change: transform;
     }
-    .btn-submit:hover { background: #b07e0a; transform: translateY(-1px); }
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      border-radius: 8px;
+      background: linear-gradient(to bottom, #FFFDDD 0%, #856807 50%, #FFF1B3 100%);
+      pointer-events: none;
+    }
+    .btn-submit span {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      border-radius: 7px;
+      background: linear-gradient(to bottom, #FFEBA1, #9B873F);
+      color: #FFFDE5;
+      text-shadow: 0 -1px 0 rgba(178,140,2,1);
+      font-weight: 700;
+      font-size: 1rem;
+      font-family: var(--font-body);
+      padding: 0.88rem 1.5rem;
+    }
+    .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(145,113,0,0.4); }
+    .btn-submit:active { transform: translateY(2px) scale(0.99); box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
 
     .success-msg {
       display: none;
@@ -865,17 +974,43 @@
     }
     .footer-cta-p { color: rgba(255,255,255,0.48); font-size: 0.86rem; line-height: 1.65; margin-bottom: 1.25rem; }
     .btn-footer {
-      background: var(--color-accent);
-      color: var(--color-primary);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9px;
+      padding: 1.5px;
+      background: linear-gradient(to bottom, #917100, #EAD98F);
+      text-decoration: none;
+      transition: transform 250ms cubic-bezier(0.1,0.4,0.2,1), box-shadow 250ms cubic-bezier(0.1,0.4,0.2,1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      will-change: transform;
+    }
+    .btn-footer::before {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      border-radius: 8px;
+      background: linear-gradient(to bottom, #FFFDDD 0%, #856807 50%, #FFF1B3 100%);
+      pointer-events: none;
+    }
+    .btn-footer span {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      border-radius: 7px;
+      background: linear-gradient(to bottom, #FFEBA1, #9B873F);
+      color: #FFFDE5;
+      text-shadow: 0 -1px 0 rgba(178,140,2,1);
       font-weight: 700;
       font-size: 0.85rem;
+      font-family: var(--font-body);
       padding: 0.6rem 1.25rem;
-      border-radius: 6px;
-      text-decoration: none;
-      display: inline-block;
-      transition: background 0.2s;
+      white-space: nowrap;
     }
-    .btn-footer:hover { background: #b07e0a; }
+    .btn-footer:hover { transform: translateY(-1px); box-shadow: 0 5px 15px rgba(145,113,0,0.4); }
+    .btn-footer:active { transform: translateY(2px) scale(0.99); }
     .footer-copy { color: rgba(255,255,255,0.35); font-size: 0.78rem; margin-top: 2rem; }
     .footer-copy a { color: rgba(255,255,255,0.35); text-decoration: none; }
     .footer-copy a:hover { color: rgba(255,255,255,0.6); }
@@ -946,7 +1081,9 @@
       .hero-h1 { font-size: clamp(1.9rem, 8.5vw, 2.8rem); }
       .hero-sub { margin-left: auto; margin-right: auto; font-size: 0.95rem; max-width: 100%; }
       .hero-ctas { justify-content: center; flex-direction: column; align-items: stretch; }
-      .hero-ctas a { text-align: center; }
+      .hero-ctas .btn-hero-primary,
+      .hero-ctas .btn-hero-secondary { display: flex; }
+      .hero-ctas .btn-hero-primary span { width: 100%; text-align: center; }
       .hero-stats { justify-content: center; gap: 1.25rem; }
 
       /* Hero visual → 2×2 card grid instead of the SVG illustration */
@@ -1001,7 +1138,8 @@
     /* Small phone ≤ 479px */
     @media (max-width: 479px) {
       .hero-inner { padding: 3rem 1rem 2.5rem; }
-      .hero-ctas a { padding: 0.88rem 1rem; font-size: 0.92rem; }
+      .hero-ctas .btn-hero-primary span { padding: 0.88rem 1rem; font-size: 0.92rem; }
+      .hero-ctas .btn-hero-secondary { padding: 0.88rem 1rem; font-size: 0.92rem; }
       .metrics-grid { grid-template-columns: 1fr 1fr; }
       .hero-stats { flex-direction: column; gap: 0.85rem; align-items: center; }
       .stat-divider { width: 36px; height: 1px; }
@@ -1299,7 +1437,7 @@
       <a href="#team"         class="nav-link">Team</a>
       <a href="#testimonials" class="nav-link">Testimonials</a>
       <a href="#contact"      class="nav-link">Contact</a>
-      <a href="#contact"      class="btn-nav">Book Consultation</a>
+      <a href="#contact" class="btn-nav"><span>Book Consultation</span></a>
     </div>
 
     <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
@@ -1314,7 +1452,7 @@
     <a href="#testimonials" class="mobile-nav-link">Testimonials</a>
     <a href="#contact"      class="mobile-nav-link">Contact</a>
     <div class="mobile-menu-cta">
-      <a href="#contact">Book Consultation</a>
+      <a href="#contact" class="btn-nav"><span>Book Consultation</span></a>
     </div>
   </div>
 </nav>
@@ -1352,8 +1490,8 @@
       </p>
 
       <div class="hero-ctas hero-stagger-4">
-        <a href="#contact" class="btn-hero-primary">Book a Free Consultation</a>
-        <a href="#services" class="btn-hero-secondary">Our Services</a>
+        <a href="#contact" class="btn-hero-primary"><span>Book a Free Consultation</span></a>
+        <a href="#services" class="btn-hero-secondary"><span>Our Services</span></a>
       </div>
 
       <div class="hero-stats hero-stagger-5">
@@ -2098,7 +2236,7 @@
               <textarea class="form-input" id="message" name="message" rows="4"
                         placeholder="Tell us a bit about what you need help with…"></textarea>
             </div>
-            <button type="submit" class="btn-submit">Book My Consultation</button>
+            <button type="submit" class="btn-submit"><span>Book My Consultation</span></button>
           </div>
         </form>
 
@@ -2202,7 +2340,7 @@
     <div>
       <p class="footer-cta-h">Ready to Get Started?</p>
       <p class="footer-cta-p">Book a free 30-minute consultation with our team today. No obligation, no pressure.</p>
-      <a href="#contact" class="btn-footer">Schedule a Call &rarr;</a>
+      <a href="#contact" class="btn-footer"><span>Schedule a Call &rarr;</span></a>
       <div class="footer-copy">
         <p>&copy; 2025 R.S. Kapoor &amp; Co. All rights reserved.</p>
         <a href="#">Privacy Policy</a>
@@ -2428,6 +2566,19 @@
     });
   });
 </script>
+
+<!-- SVG filter for liquid glass secondary button -->
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <filter id="btn-glass-filter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05 0.05" numOctaves="1" seed="1" result="turbulence"/>
+      <feGaussianBlur in="turbulence" stdDeviation="2" result="blurredNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="70" xChannelSelector="R" yChannelSelector="B" result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="4" result="finalBlur"/>
+      <feComposite in="finalBlur" in2="finalBlur" operator="over"/>
+    </filter>
+  </defs>
+</svg>
 
 </body>
 </html>
