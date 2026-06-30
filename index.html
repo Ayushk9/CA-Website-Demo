@@ -1544,6 +1544,72 @@
       @keyframes touchRipple {
         to { transform: scale(8); opacity: 0; }
       }
+
+      /* ── Scroll animation keyframes ───────────────────── */
+      @keyframes mobUp {
+        from { opacity: 0; transform: translateY(32px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes mobLeft {
+        from { opacity: 0; transform: translateX(-36px); }
+        to   { opacity: 1; transform: translateX(0); }
+      }
+      @keyframes mobRight {
+        from { opacity: 0; transform: translateX(36px); }
+        to   { opacity: 1; transform: translateX(0); }
+      }
+      @keyframes mobScale {
+        from { opacity: 0; transform: scale(0.88) translateY(20px); }
+        to   { opacity: 1; transform: scale(1) translateY(0); }
+      }
+
+      /* ── Services: instant container, staggered cards ── */
+      .services-grid.reveal { transition: none; }
+      .services-grid.reveal.visible { opacity: 1; transform: none; }
+      .services-grid.visible .service-card {
+        animation: mobUp 0.55s cubic-bezier(0.22,1,0.36,1) both;
+      }
+      .services-grid.visible .service-card:nth-child(1) { animation-delay: 0.00s; }
+      .services-grid.visible .service-card:nth-child(2) { animation-delay: 0.11s; }
+      .services-grid.visible .service-card:nth-child(3) { animation-delay: 0.22s; }
+      .services-grid.visible .service-card:nth-child(4) { animation-delay: 0.33s; }
+      .services-grid.visible .service-card:nth-child(5) { animation-delay: 0.44s; }
+      .services-grid.visible .service-card:nth-child(6) { animation-delay: 0.55s; }
+
+      /* ── Features: alternating left/right slide ──────── */
+      .features-grid.reveal { transition: none; }
+      .features-grid.reveal.visible { opacity: 1; transform: none; }
+      .features-grid.visible .feature-block:nth-child(odd) {
+        animation: mobLeft 0.55s cubic-bezier(0.22,1,0.36,1) both;
+      }
+      .features-grid.visible .feature-block:nth-child(even) {
+        animation: mobRight 0.55s cubic-bezier(0.22,1,0.36,1) both;
+      }
+      .features-grid.visible .feature-block:nth-child(1) { animation-delay: 0.00s; }
+      .features-grid.visible .feature-block:nth-child(2) { animation-delay: 0.12s; }
+      .features-grid.visible .feature-block:nth-child(3) { animation-delay: 0.24s; }
+      .features-grid.visible .feature-block:nth-child(4) { animation-delay: 0.36s; }
+
+      /* ── Team: scale-in stagger ──────────────────────── */
+      .team-grid.reveal { transition: none; }
+      .team-grid.reveal.visible { opacity: 1; transform: none; }
+      .team-grid.visible .team-card {
+        animation: mobScale 0.6s cubic-bezier(0.22,1,0.36,1) both;
+      }
+      .team-grid.visible .team-card:nth-child(1) { animation-delay: 0.00s; }
+      .team-grid.visible .team-card:nth-child(2) { animation-delay: 0.15s; }
+      .team-grid.visible .team-card:nth-child(3) { animation-delay: 0.30s; }
+
+      /* ── About metrics: instant container, staggered ─── */
+      .about-grid > div:last-child.reveal { transition: none; }
+      .about-grid > div:last-child.reveal.visible { opacity: 1; transform: none; }
+      .about-grid > div:last-child.reveal.visible .metric-card {
+        animation: mobScale 0.5s cubic-bezier(0.22,1,0.36,1) both;
+      }
+      .about-grid > div:last-child.reveal.visible .metric-card:nth-child(1) { animation-delay: 0.00s; }
+      .about-grid > div:last-child.reveal.visible .metric-card:nth-child(2) { animation-delay: 0.12s; }
+      .about-grid > div:last-child.reveal.visible .metric-card:nth-child(3) { animation-delay: 0.24s; }
+      .about-grid > div:last-child.reveal.visible .metric-card:nth-child(4) { animation-delay: 0.36s; }
     }
 
   </style>
