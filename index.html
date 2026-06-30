@@ -465,51 +465,140 @@
     .feature-desc { color: var(--color-text-muted); font-size: 0.88rem; line-height: 1.65; }
 
     /* ── TEAM ──────────────────────────────────────────────────── */
-    .team { padding: 6rem 0; background: white; }
+    .team {
+      position: relative;
+      padding: 6rem 0;
+      background: white;
+      overflow: hidden;
+    }
+    .team-bg-grid {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.045;
+      pointer-events: none;
+    }
+    .team-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+    }
+    .team-label-spaced {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.45em;
+      color: var(--color-accent);
+      margin-bottom: 0.4rem;
+    }
     .team-grid {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
     .team-card {
-      background: white;
-      border: 1px solid var(--color-border);
-      border-radius: 14px;
-      padding: 2.25rem 2rem;
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      padding: 2.5rem 1.75rem 2rem;
       text-align: center;
-      transition: box-shadow 0.28s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .team-card:hover { box-shadow: 0 10px 34px rgba(0,0,0,0.1); }
+    .team-card:hover {
+      transform: scale(1.025);
+      box-shadow: 0 20px 52px rgba(0,0,0,0.13);
+    }
+    .team-card-1 { background: #fdf8ee; }
+    .team-card-2 { background: #eef2f8; }
+    .team-card-3 { background: #f4f4f8; }
+    .team-card-wave {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 52%;
+      border-radius: 60% 60% 0 0;
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.5s ease-out;
+      pointer-events: none;
+    }
+    .team-card-1 .team-card-wave { background: linear-gradient(to top, rgba(200,150,12,0.18), transparent); }
+    .team-card-2 .team-card-wave { background: linear-gradient(to top, rgba(27,58,92,0.14), transparent); }
+    .team-card-3 .team-card-wave { background: linear-gradient(to top, rgba(93,109,126,0.13), transparent); }
+    .team-card:hover .team-card-wave { transform: scaleY(1); }
     .avatar {
-      width: 80px; height: 80px;
+      position: relative;
+      z-index: 1;
+      width: 120px; height: 120px;
       border-radius: 50%;
-      background: #e3eaf2;
+      background: rgba(255,255,255,0.55);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 1.1rem;
+      margin: 0 auto 1.25rem;
       font-family: var(--font-heading);
-      font-size: 1.35rem;
-      color: var(--color-accent);
+      font-size: 2rem;
+      color: var(--color-primary);
       font-weight: 700;
-      border: 3px solid var(--color-border);
+      border: 4px solid transparent;
+      backdrop-filter: blur(4px);
+      transition: border-color 0.45s ease, transform 0.45s ease;
+    }
+    .team-card:hover .avatar {
+      border-color: var(--color-accent);
+      transform: scale(1.07);
     }
     .team-name {
+      position: relative;
+      z-index: 1;
       font-family: var(--font-heading);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: var(--color-primary);
       font-weight: 700;
       margin-bottom: 0.3rem;
     }
     .team-role {
+      position: relative;
+      z-index: 1;
       color: var(--color-accent);
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      margin-bottom: 0.75rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.85rem;
     }
-    .team-bio { color: var(--color-text-muted); font-size: 0.86rem; line-height: 1.65; }
+    .team-bio {
+      position: relative;
+      z-index: 1;
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+      line-height: 1.65;
+    }
+    .team-social {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 0.65rem;
+      justify-content: center;
+      margin-top: 1.1rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .team-card:hover .team-social { opacity: 1; }
+    .team-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.7);
+      color: var(--color-primary);
+      transition: background 0.2s, color 0.2s;
+    }
+    .team-social a:hover { background: var(--color-accent); color: white; }
 
     /* ── TESTIMONIALS (vertical scroll columns) ────────────────── */
     .testimonials { padding: 6rem 0; background: var(--color-primary); }
@@ -831,7 +920,8 @@
       .hero-sub { margin-left: auto; margin-right: auto; }
       .services-grid { grid-template-columns: 1fr 1fr; }
       .features-grid { grid-template-columns: 1fr; }
-      .team-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
+      .team-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      .team-header-row { flex-direction: column; }
 .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .form-row { grid-template-columns: 1fr; }
       .footer-main { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem 2rem; }
@@ -1529,39 +1619,81 @@
      TEAM
 ══════════════════════════════════════════════════ -->
 <section id="team" class="team">
+
+  <!-- Background grid -->
+  <svg class="team-bg-grid" aria-hidden="true" fill="none">
+    <defs>
+      <pattern id="team-grid-pat" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+        <path d="M24 0L0 0 0 24" fill="none" stroke="currentColor" stroke-width="0.6"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#team-grid-pat)" style="color:var(--color-primary)"/>
+  </svg>
+
   <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="section-label">Our People</span>
-      <h2 class="section-h2">The Team Behind Your Compliance</h2>
+
+    <div class="team-header-row reveal">
+      <div>
+        <span class="team-label-spaced">O U R</span>
+        <h2 class="section-h2" style="margin-bottom:0.75rem;">Team</h2>
+        <p style="color:var(--color-text-muted);max-width:560px;font-size:1rem;line-height:1.7;">The people who keep your books clean, your filings on time, and your business out of trouble — every single year.</p>
+      </div>
     </div>
 
     <div class="team-grid reveal">
 
       <!-- CA Rajesh -->
-      <div class="team-card">
+      <div class="team-card team-card-1">
+        <div class="team-card-wave" aria-hidden="true"></div>
         <div class="avatar">RK</div>
         <h3 class="team-name">CA Rajesh S. Kapoor</h3>
         <p class="team-role">Founder &amp; Partner</p>
         <!-- PLACEHOLDER: Replace bio with actual credentials -->
-        <p class="team-bio">B.Com, FCA | 15+ years in direct tax and audit. Former article at a Big 4 firm in Mumbai.</p>
+        <p class="team-bio">B.Com, FCA | 15+ years in direct tax and statutory audit. Former article at a Big 4 firm in Mumbai.</p>
+        <div class="team-social">
+          <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="mailto:#" aria-label="Email">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </a>
+        </div>
       </div>
 
       <!-- CA Priya -->
-      <div class="team-card">
+      <div class="team-card team-card-2">
+        <div class="team-card-wave" aria-hidden="true"></div>
         <div class="avatar">PS</div>
         <h3 class="team-name">CA Priya Sharma</h3>
         <p class="team-role">Senior Associate</p>
         <!-- PLACEHOLDER: Replace bio with actual credentials -->
         <p class="team-bio">B.Com, ACA | Specializes in GST compliance and company law matters. 6+ years of practice.</p>
+        <div class="team-social">
+          <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="mailto:#" aria-label="Email">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </a>
+        </div>
       </div>
 
       <!-- Amit -->
-      <div class="team-card">
+      <div class="team-card team-card-3">
+        <div class="team-card-wave" aria-hidden="true"></div>
         <div class="avatar">AV</div>
         <h3 class="team-name">Amit Verma</h3>
         <p class="team-role">Tax &amp; Compliance Manager</p>
         <!-- PLACEHOLDER: Replace bio with actual credentials -->
         <p class="team-bio">B.Com, pursuing DISA | Handles TDS, ROC filings, and day-to-day client coordination.</p>
+        <div class="team-social">
+          <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="mailto:#" aria-label="Email">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </a>
+        </div>
       </div>
 
     </div>
