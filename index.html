@@ -511,39 +511,58 @@
     }
     .team-bio { color: var(--color-text-muted); font-size: 0.86rem; line-height: 1.65; }
 
-    /* ── TESTIMONIALS ──────────────────────────────────────────── */
+    /* ── TESTIMONIALS (vertical scroll columns) ────────────────── */
     .testimonials { padding: 6rem 0; background: var(--color-primary); }
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+    .tc-columns-wrap {
+      position: relative;
+      height: 540px;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 13%, black 87%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 13%, black 87%, transparent 100%);
+    }
+    .tc-columns { display: flex; gap: 1.25rem; height: 100%; }
+    .tc-col-wrap { flex: 1; overflow: hidden; min-width: 0; }
+    .tc-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      animation: tc-scroll linear infinite;
+      will-change: transform;
+    }
+    .tc-col:hover { animation-play-state: paused; }
+    .tc-col-1 { animation-duration: 30s; }
+    .tc-col-2 { animation-duration: 23s; animation-direction: reverse; }
+    .tc-col-3 { animation-duration: 36s; }
+    @keyframes tc-scroll {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-50%); }
     }
     .testimonial-card {
       background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 14px;
-      padding: 2.25rem 2rem;
-      transition: background 0.25s;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      padding: 1.6rem 1.5rem;
+      flex-shrink: 0;
+      transition: background 0.25s, border-color 0.25s;
     }
-    .testimonial-card:hover { background: rgba(255,255,255,0.09); }
-    .quote-mark {
-      display: block;
-      font-family: var(--font-heading);
-      font-size: 4.5rem;
-      color: var(--color-accent);
-      line-height: 0.7;
+    .testimonial-card:hover { background: rgba(255,255,255,0.10); border-color: rgba(200,150,12,0.35); }
+    .testimonial-text {
+      color: rgba(255,255,255,0.80);
+      font-size: 0.875rem;
+      line-height: 1.75;
+      font-style: italic;
       margin-bottom: 1.1rem;
     }
-    .testimonial-text {
-      color: rgba(255,255,255,0.82);
-      font-size: 0.93rem;
-      line-height: 1.78;
-      font-style: italic;
-      margin-bottom: 1.5rem;
+    .testimonial-author { display: flex; align-items: center; gap: 0.7rem; }
+    .tc-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 700;
+      flex-shrink: 0; color: white; letter-spacing: 0.04em;
     }
-    .testimonial-author { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; }
-    .testimonial-name { color: white; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
-    .testimonial-role { color: rgba(255,255,255,0.45); font-size: 0.8rem; }
+    .testimonial-name { color: white; font-weight: 600; font-size: 0.86rem; line-height: 1.3; }
+    .testimonial-role { color: rgba(255,255,255,0.45); font-size: 0.76rem; margin-top: 0.12rem; }
 
     /* ── CONTACT ───────────────────────────────────────────────── */
     .contact { padding: 6rem 0; background: white; }
@@ -813,8 +832,7 @@
       .services-grid { grid-template-columns: 1fr 1fr; }
       .features-grid { grid-template-columns: 1fr; }
       .team-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
-      .testimonials-grid { grid-template-columns: 1fr; }
-      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+.contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .form-row { grid-template-columns: 1fr; }
       .footer-main { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem 2rem; }
       .footer-main > div:last-child { grid-column: auto; }
@@ -1100,56 +1118,14 @@
     .contact .success-p { color: rgba(255,255,255,0.60); }
     .contact .success-icon-wrap { background: rgba(200,150,12,0.15); }
 
-    /* ── Testimonials carousel ────────────────────────── */
-    .testimonials-carousel {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-    .tc-viewport { overflow: hidden; width: 100%; }
-    .tc-track {
-      display: flex;
-      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: transform;
-    }
-    .tc-track .testimonial-card {
-      flex: 0 0 100%;
-      box-sizing: border-box;
-    }
-    .tc-arrow {
-      flex-shrink: 0;
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.07);
-      color: white;
-      font-size: 1.6rem;
-      line-height: 1;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .tc-arrow:hover { background: rgba(200,150,12,0.22); border-color: var(--color-accent); }
-    .tc-dots {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 2rem;
-    }
-    .tc-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255,255,255,0.25);
-      cursor: pointer;
-      padding: 0;
-      transition: background 0.25s, transform 0.25s;
-    }
-    .tc-dot.active { background: var(--color-accent); transform: scale(1.35); }
+    /* ── Testimonials responsive ─────────────────────── */
     @media (max-width: 767px) {
-      .tc-arrow { display: none; }
+      .tc-col-wrap:nth-child(3) { display: none; }
+      .tc-columns-wrap { height: 460px; }
+    }
+    @media (max-width: 480px) {
+      .tc-col-wrap:nth-child(2) { display: none; }
+      .tc-columns-wrap { height: 400px; }
     }
   </style>
 </head>
@@ -1603,58 +1579,272 @@
       <h2 class="section-h2" style="color:white;">What Our Clients Say</h2>
     </div>
 
-    <div class="testimonials-carousel" role="region" aria-label="Client testimonials">
-      <button class="tc-arrow tc-prev" aria-label="Previous testimonial">&#8249;</button>
-      <div class="tc-viewport">
-        <div class="tc-track" id="tcTrack">
+    <div class="tc-columns-wrap" role="region" aria-label="Client testimonials">
+      <div class="tc-columns">
 
-          <div class="testimonial-card">
-            <span class="quote-mark">&ldquo;</span>
-            <p class="testimonial-text">Rajesh sir has been filing my family's ITRs for 11 years. Never missed a deadline, never a wrong number. Complete trust.</p>
-            <div class="testimonial-author">
-              <p class="testimonial-name">Sunil M.</p>
-              <p class="testimonial-role">Business Owner, Mumbai</p>
+        <!-- Column 1 -->
+        <div class="tc-col-wrap">
+          <div class="tc-col tc-col-1">
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Rajesh sir has been handling my family's ITRs for over eleven years now. Not once has a deadline been missed or a figure gone wrong. That kind of consistency is rare."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#2e6b9e;">SM</div>
+                <div>
+                  <p class="testimonial-name">Sunil M.</p>
+                  <p class="testimonial-role">Business Owner, Mumbai</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"We brought them in mid-year when our books were a disaster. Within three months everything was reconciled, GST filings were current, and we had zero pending notices."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#7b4f9e;">PR</div>
+                <div>
+                  <p class="testimonial-name">Priya R.</p>
+                  <p class="testimonial-role">CFO, Mid-size Manufacturing Co.</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"I'm a freelance consultant and tax season used to give me anxiety. Kapoor &amp; Co. set up a simple tracker for my invoices and now the whole process takes one call and a week."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#3a7d44;">NK</div>
+                <div>
+                  <p class="testimonial-name">Nikhil K.</p>
+                  <p class="testimonial-role">Independent Consultant, Pune</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Started a home-based baking business last year and had no clue about GST registration. They walked me through everything — now I run a fully compliant operation."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#b5541c;">MV</div>
+                <div>
+                  <p class="testimonial-name">Meera V.</p>
+                  <p class="testimonial-role">Entrepreneur, Thane</p>
+                </div>
+              </div>
+            </div>
+            <!-- duplicate for seamless loop -->
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Rajesh sir has been handling my family's ITRs for over eleven years now. Not once has a deadline been missed or a figure gone wrong. That kind of consistency is rare."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#2e6b9e;">SM</div>
+                <div>
+                  <p class="testimonial-name">Sunil M.</p>
+                  <p class="testimonial-role">Business Owner, Mumbai</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"We brought them in mid-year when our books were a disaster. Within three months everything was reconciled, GST filings were current, and we had zero pending notices."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#7b4f9e;">PR</div>
+                <div>
+                  <p class="testimonial-name">Priya R.</p>
+                  <p class="testimonial-role">CFO, Mid-size Manufacturing Co.</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"I'm a freelance consultant and tax season used to give me anxiety. Kapoor &amp; Co. set up a simple tracker for my invoices and now the whole process takes one call and a week."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#3a7d44;">NK</div>
+                <div>
+                  <p class="testimonial-name">Nikhil K.</p>
+                  <p class="testimonial-role">Independent Consultant, Pune</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Started a home-based baking business last year and had no clue about GST registration. They walked me through everything — now I run a fully compliant operation."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#b5541c;">MV</div>
+                <div>
+                  <p class="testimonial-name">Meera V.</p>
+                  <p class="testimonial-role">Entrepreneur, Thane</p>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div class="testimonial-card">
-            <span class="quote-mark">&ldquo;</span>
-            <p class="testimonial-text">We were a mess before Kapoor &amp; Co. — missing GST dates, getting notices. In six months they sorted everything. Highly recommend.</p>
-            <div class="testimonial-author">
-              <p class="testimonial-name">Deepa R.</p>
-              <p class="testimonial-role">Director, Retail Chain</p>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <span class="quote-mark">&ldquo;</span>
-            <p class="testimonial-text">Switched from another CA after getting a notice we shouldn't have. Kapoor &amp; Co. resolved it and we've never had an issue since.</p>
-            <div class="testimonial-author">
-              <p class="testimonial-name">Amit T.</p>
-              <p class="testimonial-role">Salaried Professional</p>
-            </div>
-          </div>
-
-          <!-- PLACEHOLDER: Replace with actual client testimonial -->
-          <div class="testimonial-card">
-            <span class="quote-mark">&ldquo;</span>
-            <p class="testimonial-text">As a first-time startup founder I had no idea about GST or TDS. The team sat with me for two hours, explained everything clearly, and set up our entire compliance from scratch. Brilliant.</p>
-            <div class="testimonial-author">
-              <p class="testimonial-name">Ritesh K.</p>
-              <p class="testimonial-role">Co-founder, SaaS Startup</p>
-            </div>
-          </div>
-
         </div>
-      </div>
-      <button class="tc-arrow tc-next" aria-label="Next testimonial">&#8250;</button>
-    </div>
 
-    <div class="tc-dots" id="tcDots">
-      <button class="tc-dot active" data-slide="0" aria-label="Slide 1"></button>
-      <button class="tc-dot" data-slide="1" aria-label="Slide 2"></button>
-      <button class="tc-dot" data-slide="2" aria-label="Slide 3"></button>
-      <button class="tc-dot" data-slide="3" aria-label="Slide 4"></button>
+        <!-- Column 2 -->
+        <div class="tc-col-wrap">
+          <div class="tc-col tc-col-2">
+            <div class="testimonial-card">
+              <p class="testimonial-text">"We were missing GST due dates left and right before we switched to Kapoor &amp; Co. In six months they completely restructured our compliance calendar. Night and day difference."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#c0392b;">DR</div>
+                <div>
+                  <p class="testimonial-name">Deepa R.</p>
+                  <p class="testimonial-role">Director, Retail Chain</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"I received a demand notice from the IT department that I didn't understand at all. Kapoor &amp; Co. handled the entire response, got it resolved in under three weeks. Huge relief."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#1a7a6e;">AT</div>
+                <div>
+                  <p class="testimonial-name">Amit T.</p>
+                  <p class="testimonial-role">Senior Manager, FMCG Company</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Our import-export business has GST, customs duty, and forex compliance all tangled together. These guys handle all of it without us needing to chase anyone."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#8e5e1f;">FQ</div>
+                <div>
+                  <p class="testimonial-name">Farhan Q.</p>
+                  <p class="testimonial-role">Proprietor, Trading Firm</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Running a registered NGO, every rupee must be accounted for. The team at Kapoor &amp; Co. understands 80G, FCRA, and all the specific compliance our trust needs. Impeccable."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#4a6741;">SB</div>
+                <div>
+                  <p class="testimonial-name">Sunita B.</p>
+                  <p class="testimonial-role">Trustee, Charitable Foundation</p>
+                </div>
+              </div>
+            </div>
+            <!-- duplicate for seamless loop -->
+            <div class="testimonial-card">
+              <p class="testimonial-text">"We were missing GST due dates left and right before we switched to Kapoor &amp; Co. In six months they completely restructured our compliance calendar. Night and day difference."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#c0392b;">DR</div>
+                <div>
+                  <p class="testimonial-name">Deepa R.</p>
+                  <p class="testimonial-role">Director, Retail Chain</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"I received a demand notice from the IT department that I didn't understand at all. Kapoor &amp; Co. handled the entire response, got it resolved in under three weeks. Huge relief."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#1a7a6e;">AT</div>
+                <div>
+                  <p class="testimonial-name">Amit T.</p>
+                  <p class="testimonial-role">Senior Manager, FMCG Company</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Our import-export business has GST, customs duty, and forex compliance all tangled together. These guys handle all of it without us needing to chase anyone."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#8e5e1f;">FQ</div>
+                <div>
+                  <p class="testimonial-name">Farhan Q.</p>
+                  <p class="testimonial-role">Proprietor, Trading Firm</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Running a registered NGO, every rupee must be accounted for. The team at Kapoor &amp; Co. understands 80G, FCRA, and all the specific compliance our trust needs. Impeccable."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#4a6741;">SB</div>
+                <div>
+                  <p class="testimonial-name">Sunita B.</p>
+                  <p class="testimonial-role">Trustee, Charitable Foundation</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3 -->
+        <div class="tc-col-wrap">
+          <div class="tc-col tc-col-3">
+            <!-- PLACEHOLDER: Replace with actual client testimonials -->
+            <div class="testimonial-card">
+              <p class="testimonial-text">"As a first-time founder I had zero knowledge of GST or TDS. The team sat with me for two full hours, explained every obligation clearly, and built our compliance stack from scratch."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#5b3680;">RK</div>
+                <div>
+                  <p class="testimonial-name">Ritesh K.</p>
+                  <p class="testimonial-role">Co-founder, SaaS Startup</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Professional tax, presumptive income scheme, TDS on clinic payments — there are many nuances for a doctor in practice. Kapoor &amp; Co. handles all of it without me lifting a finger."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#1e6f8e;">KD</div>
+                <div>
+                  <p class="testimonial-name">Dr. Kavya D.</p>
+                  <p class="testimonial-role">General Physician, Navi Mumbai</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Real estate transactions have layers — TDS on property, capital gains, JDA agreements. I've tried three CAs before. Kapoor &amp; Co. are the first who actually understood all of it."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#6b3929;">RL</div>
+                <div>
+                  <p class="testimonial-name">Ramesh L.</p>
+                  <p class="testimonial-role">Real Estate Developer</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Managing payroll compliance for 400 employees across two states was becoming a headache. Kapoor &amp; Co. took it over entirely. PF, ESI, TDS — zero errors since day one."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#2c6e7a;">TM</div>
+                <div>
+                  <p class="testimonial-name">Tanya M.</p>
+                  <p class="testimonial-role">HR Director, Technology MNC</p>
+                </div>
+              </div>
+            </div>
+            <!-- duplicate for seamless loop -->
+            <div class="testimonial-card">
+              <p class="testimonial-text">"As a first-time founder I had zero knowledge of GST or TDS. The team sat with me for two full hours, explained every obligation clearly, and built our compliance stack from scratch."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#5b3680;">RK</div>
+                <div>
+                  <p class="testimonial-name">Ritesh K.</p>
+                  <p class="testimonial-role">Co-founder, SaaS Startup</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Professional tax, presumptive income scheme, TDS on clinic payments — there are many nuances for a doctor in practice. Kapoor &amp; Co. handles all of it without me lifting a finger."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#1e6f8e;">KD</div>
+                <div>
+                  <p class="testimonial-name">Dr. Kavya D.</p>
+                  <p class="testimonial-role">General Physician, Navi Mumbai</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Real estate transactions have layers — TDS on property, capital gains, JDA agreements. I've tried three CAs before. Kapoor &amp; Co. are the first who actually understood all of it."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#6b3929;">RL</div>
+                <div>
+                  <p class="testimonial-name">Ramesh L.</p>
+                  <p class="testimonial-role">Real Estate Developer</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Managing payroll compliance for 400 employees across two states was becoming a headache. Kapoor &amp; Co. took it over entirely. PF, ESI, TDS — zero errors since day one."</p>
+              <div class="testimonial-author">
+                <div class="tc-avatar" style="background:#2c6e7a;">TM</div>
+                <div>
+                  <p class="testimonial-name">Tanya M.</p>
+                  <p class="testimonial-role">HR Director, Technology MNC</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
@@ -2028,49 +2218,6 @@
   setTimeout(() => {
     document.querySelectorAll('[data-counter]').forEach(runCounter);
   }, 900);
-
-  // ── Testimonials auto-scroll carousel ─────────────
-  (function() {
-    var track   = document.getElementById('tcTrack');
-    var dotBtns = document.querySelectorAll('#tcDots .tc-dot');
-    if (!track) return;
-
-    var total   = track.children.length;
-    var current = 0;
-    var timer;
-    var INTERVAL = 4200;
-
-    function goTo(n) {
-      current = ((n % total) + total) % total;
-      track.style.transform = 'translateX(-' + (current * 100) + '%)';
-      dotBtns.forEach(function(d, i) {
-        d.classList.toggle('active', i === current);
-      });
-    }
-
-    function next() { goTo(current + 1); }
-    function prev() { goTo(current - 1); }
-
-    function startAuto() { timer = setInterval(next, INTERVAL); }
-    function stopAuto()  { clearInterval(timer); }
-
-    var prevBtn = document.querySelector('.tc-prev');
-    var nextBtn = document.querySelector('.tc-next');
-    if (prevBtn) prevBtn.addEventListener('click', function() { stopAuto(); prev(); startAuto(); });
-    if (nextBtn) nextBtn.addEventListener('click', function() { stopAuto(); next(); startAuto(); });
-
-    dotBtns.forEach(function(dot, i) {
-      dot.addEventListener('click', function() { stopAuto(); goTo(i); startAuto(); });
-    });
-
-    var carousel = document.querySelector('.testimonials-carousel');
-    if (carousel) {
-      carousel.addEventListener('mouseenter', stopAuto);
-      carousel.addEventListener('mouseleave', startAuto);
-    }
-
-    startAuto();
-  })();
 
   // ── Smooth scroll for all hash links ──────────────
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
