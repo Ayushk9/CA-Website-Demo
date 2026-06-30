@@ -11,9 +11,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -55,7 +52,7 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     body {
       font-family: var(--font-body);
@@ -1492,6 +1489,63 @@
     .contact .success-p { color: rgba(255,255,255,0.60); }
     .contact .success-icon-wrap { background: rgba(200,150,12,0.15); }
 
+    /* ═══════════════════════════════════════════════════
+       MOBILE PERFORMANCE & TOUCH INTERACTIONS
+    ═══════════════════════════════════════════════════ */
+
+    @media (max-width: 1023px) {
+      /* Stop heavy GPU animations on tablet + mobile */
+      .hero-bg-orb { animation: none; }
+      .hv-card-itr, .hv-card-gst,
+      .hv-card-savings, .hv-card-audit { animation: none !important; }
+    }
+
+    @media (max-width: 767px) {
+      /* Grid column needs min-width:0 or it can overflow */
+      .hero-inner > div:first-child { min-width: 0; max-width: 100%; }
+
+      /* Clip any stray card overflow inside the hero grid */
+      .hero-visual { overflow: hidden; }
+
+      /* Staggered entrance for the static hero cards on mobile */
+      .hv-card { animation: mobileCardIn 0.5s ease-out both !important; }
+      .hv-card:nth-child(1) { animation-delay: 0.35s !important; }
+      .hv-card:nth-child(2) { animation-delay: 0.50s !important; }
+      .hv-card:nth-child(3) { animation-delay: 0.65s !important; }
+      .hv-card:nth-child(4) { animation-delay: 0.80s !important; }
+      @keyframes mobileCardIn {
+        from { opacity: 0; transform: translateY(14px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Team card: tap-to-reveal social links */
+      .team-tap-hint {
+        display: block;
+        font-size: 0.7rem;
+        color: var(--color-accent);
+        opacity: 0.7;
+        margin-top: 0.65rem;
+        letter-spacing: 0.03em;
+      }
+      .team-card.tapped .team-tap-hint { display: none; }
+      .team-card.tapped .team-card-wave { transform: scaleY(1); }
+      .team-card.tapped .avatar { border-color: var(--color-accent); transform: scale(1.07); }
+      .team-card.tapped .team-social { opacity: 1; }
+
+      /* Touch ripple on service / feature cards */
+      .touch-ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(200,150,12,0.14);
+        pointer-events: none;
+        transform: scale(0);
+        animation: touchRipple 0.6s ease-out forwards;
+      }
+      @keyframes touchRipple {
+        to { transform: scale(8); opacity: 0; }
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1925,6 +1979,7 @@
         <p class="team-role">Founder &amp; Partner</p>
         <!-- PLACEHOLDER: Replace bio with actual credentials -->
         <p class="team-bio">B.Com, FCA | 15+ years in direct tax and statutory audit. Former article at a Big 4 firm in Mumbai.</p>
+        <span class="team-tap-hint">Tap to connect</span>
         <div class="team-social">
           <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -1943,6 +1998,7 @@
         <p class="team-role">Senior Associate</p>
         <!-- PLACEHOLDER: Replace bio with actual credentials -->
         <p class="team-bio">B.Com, ACA | Specializes in GST compliance and company law matters. 6+ years of practice.</p>
+        <span class="team-tap-hint">Tap to connect</span>
         <div class="team-social">
           <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -1961,6 +2017,7 @@
         <p class="team-role">Tax &amp; Compliance Manager</p>
         <!-- PLACEHOLDER: Replace bio with actual credentials -->
         <p class="team-bio">B.Com, pursuing DISA | Handles TDS, ROC filings, and day-to-day client coordination.</p>
+        <span class="team-tap-hint">Tap to connect</span>
         <div class="team-social">
           <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -2502,6 +2559,7 @@
 
   // ── Scroll-reveal with IntersectionObserver ────────
   const revealEls = document.querySelectorAll('.reveal');
+  const isMobileVP = window.innerWidth <= 767;
   const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -2509,7 +2567,11 @@
         io.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+  }, {
+    threshold: 0.06,
+    // On mobile, fire 80px before the element enters view so it's already visible when scrolled to
+    rootMargin: isMobileVP ? '0px 0px 80px 0px' : '0px 0px -36px 0px'
+  });
 
   revealEls.forEach(el => io.observe(el));
 
@@ -2520,6 +2582,8 @@
     if (!canvas || !hero) return;
     var ctx = canvas.getContext('2d');
 
+    var isMobileCanvas = window.innerWidth <= 768;
+
     var waves = [
       { offset: 0,             amplitude: 70, frequency: 0.003,  color: 'rgba(200,150,12,0.4)',   opacity: 0.42 },
       { offset: Math.PI / 2,   amplitude: 90, frequency: 0.0026, color: 'rgba(100,155,220,0.3)',  opacity: 0.28 },
@@ -2528,9 +2592,14 @@
       { offset: Math.PI * 2,   amplitude: 55, frequency: 0.004,  color: 'rgba(150,200,255,0.12)', opacity: 0.16 },
     ];
 
+    if (isMobileCanvas) {
+      waves = waves.slice(0, 3);
+      waves.forEach(function(w) { w.amplitude *= 0.55; });
+    }
+
     var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var mouseInfluence  = prefersReducedMotion ? 8   : 65;
-    var influenceRadius = prefersReducedMotion ? 150 : 300;
+    var mouseInfluence  = prefersReducedMotion ? 8   : (isMobileCanvas ? 28 : 65);
+    var influenceRadius = prefersReducedMotion ? 150 : (isMobileCanvas ? 180 : 300);
     var smoothing       = prefersReducedMotion ? 0.04 : 0.1;
 
     var time = 0;
@@ -2543,10 +2612,13 @@
       mouseY = targetY = canvas.height / 2;
     }
 
+    var frameCount = 0;
+
     function drawWave(wave) {
       ctx.save();
       ctx.beginPath();
-      for (var x = 0; x <= canvas.width; x += 4) {
+      var step = isMobileCanvas ? 7 : 4;
+      for (var x = 0; x <= canvas.width; x += step) {
         var dx = x - mouseX;
         var dy = canvas.height / 2 - mouseY;
         var dist = Math.sqrt(dx * dx + dy * dy);
@@ -2562,13 +2634,21 @@
       ctx.lineWidth   = 2.5;
       ctx.strokeStyle = wave.color;
       ctx.globalAlpha = wave.opacity;
-      ctx.shadowBlur  = 36;
-      ctx.shadowColor = wave.color;
+      if (!isMobileCanvas) {
+        ctx.shadowBlur  = 36;
+        ctx.shadowColor = wave.color;
+      }
       ctx.stroke();
       ctx.restore();
     }
 
     function animate() {
+      frameCount++;
+      // Throttle to ~30fps on mobile to save GPU
+      if (isMobileCanvas && frameCount % 2 !== 0) {
+        requestAnimationFrame(animate);
+        return;
+      }
       time++;
       mouseX += (targetX - mouseX) * smoothing;
       mouseY += (targetY - mouseY) * smoothing;
@@ -2640,6 +2720,35 @@
   setTimeout(() => {
     document.querySelectorAll('[data-counter]').forEach(runCounter);
   }, 900);
+
+  // ── Mobile touch interactions ──────────────────────
+  if ('ontouchstart' in window) {
+    // Team cards: tap to reveal social links
+    document.querySelectorAll('.team-card').forEach(card => {
+      card.addEventListener('click', function() {
+        const isActive = this.classList.contains('tapped');
+        document.querySelectorAll('.team-card').forEach(c => c.classList.remove('tapped'));
+        if (!isActive) this.classList.add('tapped');
+      });
+    });
+
+    // Touch ripple on service + feature cards
+    document.querySelectorAll('.service-card, .feature-block').forEach(el => {
+      el.addEventListener('touchstart', function(e) {
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const r = document.createElement('span');
+        r.className = 'touch-ripple';
+        r.style.cssText =
+          'width:' + size + 'px;' +
+          'height:' + size + 'px;' +
+          'left:' + (e.touches[0].clientX - rect.left - size / 2) + 'px;' +
+          'top:' + (e.touches[0].clientY - rect.top - size / 2) + 'px;';
+        this.appendChild(r);
+        setTimeout(() => r.remove(), 650);
+      }, { passive: true });
+    });
+  }
 
   // ── Smooth scroll for all hash links ──────────────
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
